@@ -120,7 +120,10 @@ public class EquationBinaryTree {
 		root = populateFromPostfixHelper(equation);
 	}
 	private Node populateFromPostfixHelper(String equation){
-		
+		if(equation.length() == 1)
+		{
+			return new Node(equation);//math operand
+		}
 	}
 	
 	
@@ -130,7 +133,13 @@ public class EquationBinaryTree {
 	{
 		//complete this section for #5 from Assignment 4
 		//does not require recursion to solve
-		root = null;
+		root = populateFromPrefixHelper(equation);
+	}
+	private Node populateFromPrefixHelper(String equation){
+		if(equation.length() == 1)
+		{
+			return new Node(equation);//math operand
+		}
 	}
 
 	private class Node
