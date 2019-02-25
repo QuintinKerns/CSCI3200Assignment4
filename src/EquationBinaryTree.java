@@ -1,4 +1,3 @@
-
 public class EquationBinaryTree {
 	private Node root;
 
@@ -113,33 +112,111 @@ public class EquationBinaryTree {
 		return n;
 	}
 	//ab+ = (a+b)
-	public void populateFromPostfix(String equation)
+	public void populateFromPostfix(String post)
 	{
-		//complete this section for #5 from Assignment 4
-		//does not require recursion to solve
-		root = populateFromPostfixHelper(equation);
+		root = populateFromPostfixHelper(post);
 	}
-	private Node populateFromPostfixHelper(String equation){
-		if(equation.length() == 1)
+	private Node populateFromPostfixHelper(String post)
+	{
+		String[] parts = postfixBreakdownHelper(post);
+		Node temp = new Node(post.charAt(post.length() - 1) + "");
+		if(parts[0].length() == 1)
+			{
+				temp.left = new Node(parts[0].charAt(0) + "");
+			}
+		else
+			{
+				temp.left = populateFromPostfixHelper(parts[0]);
+			}
+
+		if(parts[2].length() == 1)
+			{
+				temp.right = new Node(parts[2].charAt(0) + "");
+			}
+		else
+			{
+				temp.right = populateFromPostfixHelper(parts[2]);
+			}
+		
+		return temp;
+	}
+	private String[] postfixBreakdownHelper(String post)
+	{
+		String[] temp= new String[3];
+		int pos = 0;
+		int count = 1;
+		for(int i = 0; i < post.length() - 1; i++)
 		{
-			return new Node(equation);//math operand
+			if(post.charAt(i) == '+' || post.charAt(i) == '*')
+				count++;
+			else
+				count--;
+			if(i > 0 && count == 0)
+				{
+					pos = i;
+					break;
+				}
 		}
+		
+		temp[0] = post.substring(0, pos + 1);
+		temp[1] = "" + post.charAt(post.length() - 1);
+		temp[2] = post.substring(pos + 1, post.length() - 1);
+		
+		return temp;
 	}
-	
-	
 	
 	//+ab = (a+b)
-	public void populateFromPrefix(String equation)
+	public void populateFromPrefix(String pre)
 	{
-		//complete this section for #5 from Assignment 4
-		//does not require recursion to solve
-		root = populateFromPrefixHelper(equation);
+		root = populateFromPrefixHelper(pre);
 	}
-	private Node populateFromPrefixHelper(String equation){
-		if(equation.length() == 1)
-		{
-			return new Node(equation);//math operand
-		}
+
+	private Node populateFromPrefixHelper(String pre)
+	{
+		String[] parts = prefixBreakdownHelper(pre);
+		Node temp = new Node(pre.charAt(0) + "");
+		if(parts[0].length() == 1) {
+				temp.left = new Node(parts[0].charAt(0) + "");
+			}
+		
+		else {
+				temp.left = populateFromPrefixHelper(parts[0]);
+			}
+
+		if(parts[2].length() == 1) {
+				temp.right = new Node(parts[2].charAt(0) + "");
+			}
+		
+		else {
+				temp.right = populateFromPrefixHelper(parts[2]);
+			}
+		
+		return temp;
+	}
+
+	private String[] prefixBreakdownHelper(String pre)
+	{
+		String[] temp= new String[3];
+		int pos = 0;
+		int count = 1;
+		for(int i =1; i < pre.length(); i++)
+			{
+				if(pre.charAt(i) == '+' || pre.charAt(i) == '*')
+					count++;
+				else
+					count--;
+				if(count == 0)
+				{
+					pos = i;
+					break;
+				}
+			}
+		
+		temp[0] = pre.substring(1, pos + 1);
+		temp[1] = "" + pre.charAt(0);
+		temp[2] = pre.substring(pos + 1, pre.length());
+		
+		return temp;
 	}
 
 	private class Node

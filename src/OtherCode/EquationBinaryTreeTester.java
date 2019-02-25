@@ -1,6 +1,8 @@
+package OtherCode;
+
 import java.util.Scanner;
 
-public class Number5 {
+public class EquationBinaryTreeTester {
 
 	public static void main(String[] args) {
 		EquationBinaryTree mathFormula = new EquationBinaryTree();
@@ -20,12 +22,10 @@ public class Number5 {
 		else if(type.equals("prefix"))
 			mathFormula.populateFromPrefix(formula);
 		else
-			System.out.println("Error, improper formula entered.");
-		System.out.println("Infix: ");
-		mathFormula.printInfix();
-		System.out.println("Postfix: ");
-		mathFormula.printPostfix();
-		System.out.println("Prefix: ");
-		mathFormula.printPrefix();
+			System.out.println("Error, imporper formula entered.");
+		System.out.println(mathFormula.toInfix());
+		System.out.println();
+		System.out.println(mathFormula.toPostfix());
+		System.out.println(mathFormula.toPrefix());
 	}
 }
